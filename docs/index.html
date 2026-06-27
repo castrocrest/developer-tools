@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Tools &amp; Templates — Production-Ready Code Packs</title>
+  <meta name="description" content="Production-ready developer tool packs for Python, TypeScript, React, DevOps. Vetted templates that work in real codebases. Save hours of boilerplate.">
+  <meta property="og:title" content="Developer Tools &amp; Templates">
+  <meta property="og:description" content="Production-ready code packs for Python, TypeScript, React, DevOps. Save hours of boilerplate.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.6; }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header { background: #161b22; border-bottom: 1px solid #30363d; padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    header span { font-size: 0.875rem; color: #8b949e; }
+
+    .hero { text-align: center; padding: 4rem 2rem; max-width: 700px; margin: 0 auto; }
+    .hero h2 { font-size: 2.25rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+    .hero p { color: #8b949e; font-size: 1.1rem; margin-bottom: 2rem; }
+    .cta { display: inline-block; background: #238636; color: #fff; padding: 0.75rem 1.75rem; border-radius: 6px; font-weight: 600; font-size: 1rem; }
+    .cta:hover { background: #2ea043; text-decoration: none; }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .section h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #30363d; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; transition: border-color 0.2s; }
+    .card:hover { border-color: #58a6ff; }
+    .card .name { font-weight: 600; font-size: 1rem; color: #e6edf3; }
+    .card .desc { color: #8b949e; font-size: 0.875rem; flex: 1; }
+    .card .price { color: #3fb950; font-size: 0.875rem; font-weight: 600; }
+    .card .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 100px; background: #1f2937; color: #8b949e; border: 1px solid #30363d; }
+
+    .free-section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1.5rem; margin: 2rem auto; max-width: 1100px; }
+    .free-section h3 { margin-bottom: 1rem; font-size: 1.25rem; }
+    .sample-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
+    .sample { padding: 0.6rem 1rem; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; font-size: 0.875rem; color: #58a6ff; }
+    .sample:hover { border-color: #58a6ff; }
+
+    footer { text-align: center; padding: 3rem 2rem; color: #6e7681; font-size: 0.875rem; border-top: 1px solid #30363d; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="#58a6ff"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+  <h1>castrocrest / developer-tools</h1>
+  <span>Production code packs for serious developers</span>
+</header>
+
+<section class="hero">
+  <h2>Stop writing boilerplate. Ship faster.</h2>
+  <p>Production-ready code packs for Python, TypeScript, React, and DevOps. Each pack is battle-tested, typed, and documented. Drop it in and go.</p>
+  <a href="https://castrocrest.gumroad.com" class="cta">Browse All Products →</a>
+</section>
+
+<section class="section">
+  <h3>🏆 Featured Products</h3>
+  <div class="grid">
+
+    <a href="https://castrocrest.gumroad.com/l/zezgl" class="card">
+      <div class="name">Complete Developer Toolkit Bundle</div>
+      <div class="desc">All 27 packs in one ZIP. MCP servers, GitHub Actions, Docker, FastAPI, React Query, Pydantic, and more.</div>
+      <div class="tags"><span class="tag">All-in-one</span><span class="tag">27 packs</span></div>
+      <div class="price">$97 — Best value</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/vjwtfv" class="card">
+      <div class="name">Production MCP Server Kit — TypeScript</div>
+      <div class="desc">Deploy a Model Context Protocol server in minutes. Authentication, logging, Docker, CI/CD included.</div>
+      <div class="tags"><span class="tag">TypeScript</span><span class="tag">MCP</span><span class="tag">Claude</span></div>
+      <div class="price">$24</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/rembri" class="card">
+      <div class="name">Production MCP Server Kit — Python</div>
+      <div class="desc">FastAPI-based MCP server with auth, structured logging, pytest setup, and Docker compose.</div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">MCP</span></div>
+      <div class="price">$19</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/txgadf" class="card">
+      <div class="name">Claude API Starter Kit</div>
+      <div class="desc">Streaming chat, tool use, multi-turn conversations, retry logic. TypeScript + Python.</div>
+      <div class="tags"><span class="tag">Claude API</span><span class="tag">TypeScript</span><span class="tag">Python</span></div>
+      <div class="price">$17</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/agwofd" class="card">
+      <div class="name">Claude Code Skills Pack</div>
+      <div class="desc">5 custom slash commands for code review, PR generation, test writing, dependency audits, and refactoring.</div>
+      <div class="tags"><span class="tag">Claude Code</span><span class="tag">Skills</span></div>
+      <div class="price">$14</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/gdhkoa" class="card">
+      <div class="name">CLAUDE.md Template Collection</div>
+      <div class="desc">12 project-type templates for React, FastAPI, Go, monorepo, and more. Tested to produce consistent Claude Code results.</div>
+      <div class="tags"><span class="tag">Claude Code</span><span class="tag">AI</span></div>
+      <div class="price">$12</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/fbfgwt" class="card">
+      <div class="name">GitHub Actions Pack</div>
+      <div class="desc">CI/CD workflows for Python, TypeScript, Docker publish, security scans, and release automation.</div>
+      <div class="tags"><span class="tag">GitHub Actions</span><span class="tag">CI/CD</span></div>
+      <div class="price">$12</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/narvdw" class="card">
+      <div class="name">Docker Compose Starter Pack</div>
+      <div class="desc">Production compose stacks: FastAPI+Postgres+Redis, Node+Mongo, monitoring with Prometheus+Grafana.</div>
+      <div class="tags"><span class="tag">Docker</span><span class="tag">DevOps</span></div>
+      <div class="price">$12</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/swzpnr" class="card">
+      <div class="name">git-insight CLI</div>
+      <div class="desc">Analyze git history: velocity metrics, contributor stats, hotspot files, release summaries.</div>
+      <div class="tags"><span class="tag">CLI</span><span class="tag">Git</span></div>
+      <div class="price">$12</div>
+    </a>
+
+    <a href="https://castrocrest.gumroad.com/l/tqzlmp" class="card">
+      <div class="name">changelog-gen CLI</div>
+      <div class="desc">Generate changelogs from commit history. Conventional commits, GitHub release integration.</div>
+      <div class="tags"><span class="tag">CLI</span><span class="tag">Git</span></div>
+      <div class="price">$9</div>
+    </a>
+  </div>
+</section>
+
+<section class="free-section section">
+  <h3>📖 Free Examples</h3>
+  <p style="color:#8b949e; margin-bottom:1rem; font-size:0.875rem;">Get a feel for the quality before buying. These are real snippets from the paid packs.</p>
+  <div class="sample-list">
+    <a href="examples/github-actions-quickref.md" class="sample">GitHub Actions Quick Reference</a>
+    <a href="examples/docker-compose-quickref.md" class="sample">Docker Compose Quick Reference</a>
+    <a href="examples/claude-code-quickref.md" class="sample">CLAUDE.md Templates</a>
+    <a href="examples/pytest-quickref.md" class="sample">pytest Async Fixtures</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 castrocrest · <a href="https://castrocrest.gumroad.com">All products on Gumroad</a> · <a href="https://github.com/castrocrest/developer-tools">GitHub</a></p>
+  <p style="margin-top:0.5rem">Questions? Open a GitHub issue or email via Gumroad.</p>
+</footer>
+
+</body>
+</html>
