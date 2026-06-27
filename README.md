@@ -1,51 +1,55 @@
-# Developer Tools by castrocrest
+# Developer Tools & Templates
 
-Production-ready packs, templates, and tools for developers. Each product is a focused ZIP you can drop into your project today.
+Production-ready code packs for Python, TypeScript, React, and DevOps. Save hours of boilerplate.
 
-## Available Now
-
-### AI & Claude Code
-| Product | Price | Get it |
-|---------|-------|--------|
-| Complete Developer Toolkit — All Packs Bundle | \$89 | [castrocrest.gumroad.com/l/zezgl](https://castrocrest.gumroad.com/l/zezgl) |
-| Claude Code Skills Pack — 7 Developer Slash Commands | \$14 | [castrocrest.gumroad.com/l/agwofd](https://castrocrest.gumroad.com/l/agwofd) |
-| Claude API Starter Kit — Python + TypeScript | \$17 | [castrocrest.gumroad.com/l/txgadf](https://castrocrest.gumroad.com/l/txgadf) |
-| AI Coding Prompts — 40 Tested Prompts for Claude/GPT-4 | \$14 | coming soon |
-| Production MCP Server Kit — TypeScript | \$24 | [castrocrest.gumroad.com/l/vjwtfv](https://castrocrest.gumroad.com/l/vjwtfv) |
-| Production MCP Server Kit — Python | \$19 | [castrocrest.gumroad.com/l/rembri](https://castrocrest.gumroad.com/l/rembri) |
-
-### Templates & Configs
-| Product | Price | Get it |
-|---------|-------|--------|
-| CLAUDE.md Template Collection — 5 Stacks | \$12 | [castrocrest.gumroad.com/l/gdhkoa](https://castrocrest.gumroad.com/l/gdhkoa) |
-| Cursor Rules Collection — 6 Production Stacks | \$9 | coming soon |
-| ESLint Config Pack — TypeScript, React, Next.js, Node.js | \$9 | coming soon |
-| VS Code Settings Pack — Python + TypeScript | \$9 | coming soon |
-| pyproject.toml Templates — FastAPI, CLI, Library, Django | \$9 | coming soon |
-| Zod Schemas Pack — 25+ Common Schemas | \$9 | coming soon |
-
-### Infrastructure & DevOps
-| Product | Price | Get it |
-|---------|-------|--------|
-| Docker Compose Starter Pack — 4 Production Stacks | \$12 | [castrocrest.gumroad.com/l/narvdw](https://castrocrest.gumroad.com/l/narvdw) |
-| GitHub Actions Pack — 8 Production CI/CD Workflows | \$12 | [castrocrest.gumroad.com/l/fbfgwt](https://castrocrest.gumroad.com/l/fbfgwt) |
-| Makefile Templates — Python, Node, Docker, Full-stack | \$9 | coming soon |
-| Shell Scripts Pack — 4 Production Bash Scripts | \$9 | coming soon |
-
-### Testing & Quality
-| Product | Price | Get it |
-|---------|-------|--------|
-| Pre-commit Hooks Pack — Python + Node.js | \$9 | coming soon |
-| pytest Fixtures Pack — Auth, DB, HTTP, Factories | \$9 | coming soon |
-
-### CLI Tools
-| Product | Price | Get it |
-|---------|-------|--------|
-| git-insight — GitHub Repository Health Report CLI | \$12 | [castrocrest.gumroad.com/l/swzpnr](https://castrocrest.gumroad.com/l/swzpnr) |
-| changelog-gen — GitHub Changelog Generator CLI | \$9 | [castrocrest.gumroad.com/l/tqzlmp](https://castrocrest.gumroad.com/l/tqzlmp) |
+**[🛒 Browse all products on Gumroad →](https://castrocrest.gumroad.com)**  
+**[🌐 Visit the landing page →](https://castrocrest.github.io/developer-tools/)**  
+**[🛠 Free CLAUDE.md Generator →](https://castrocrest.github.io/developer-tools/claude-md-generator.html)**
 
 ---
 
-## Philosophy
+## Products
 
-Each pack solves one problem completely. No subscriptions. No accounts. Download and use.
+### AI & Claude Code
+| Product | Price | Description |
+|---------|-------|-------------|
+| [Complete Developer Toolkit Bundle](https://castrocrest.gumroad.com/l/zezgl) | $97 | All 27 packs in one download |
+| [Production MCP Server Kit — TypeScript](https://castrocrest.gumroad.com/l/vjwtfv) | $24 | Deploy an MCP server in minutes |
+| [Production MCP Server Kit — Python](https://castrocrest.gumroad.com/l/rembri) | $19 | FastAPI-based MCP server |
+| [Claude API Starter Kit](https://castrocrest.gumroad.com/l/txgadf) | $17 | Streaming, tool use, multi-turn |
+| [Claude Code Skills Pack](https://castrocrest.gumroad.com/l/agwofd) | $14 | 7 custom slash commands |
+| [CLAUDE.md Template Collection](https://castrocrest.gumroad.com/l/gdhkoa) | $12 | 12 production-tested templates |
+
+### DevOps & Infrastructure
+| Product | Price | Description |
+|---------|-------|-------------|
+| [GitHub Actions Pack](https://castrocrest.gumroad.com/l/fbfgwt) | $12 | 8 CI/CD workflows |
+| [Docker Compose Starter Pack](https://castrocrest.gumroad.com/l/narvdw) | $12 | 4 production stacks |
+| [git-insight CLI](https://castrocrest.gumroad.com/l/swzpnr) | $12 | Git history analytics |
+| [changelog-gen CLI](https://castrocrest.gumroad.com/l/tqzlmp) | $9 | Changelog from commits |
+
+### Coming Soon ($9 each)
+Pre-commit Hooks Pack · Cursor Rules Pack · ESLint Configs · pytest Fixtures Pack · React Query Patterns · Next.js Patterns · Zod Schemas Pack · Pydantic Patterns · FastAPI Middleware · Vitest Patterns · Kubernetes Configs · Redis Patterns · Docker Multi-stage Builds · React Hooks Collection · FastAPI Starter Template · Next.js Starter Template · and more
+
+---
+
+## Free Examples
+
+Sample code from the paid packs:
+
+- [GitHub Actions Quick Reference](examples/github-actions-quickref.md)
+- [Docker Compose Quick Reference](examples/docker-compose-quickref.md)
+- [CLAUDE.md Templates](examples/claude-code-quickref.md)
+- [pytest Async Fixtures](examples/pytest-quickref.md)
+
+---
+
+## Free Tools
+
+- **[CLAUDE.md Generator](https://castrocrest.github.io/developer-tools/claude-md-generator.html)** — Generate a CLAUDE.md file for any project type (Next.js, FastAPI, Go, monorepo, etc.) with a live preview and one-click copy.
+
+---
+
+## Questions?
+
+Open a GitHub issue or reach out through [Gumroad](https://castrocrest.gumroad.com).
