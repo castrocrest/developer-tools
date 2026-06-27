@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLAUDE.md Generator — Free Tool</title>
+  <meta name="description" content="Generate a CLAUDE.md file for your project. Free tool for configuring Claude Code with project-specific instructions.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+    a { color: #58a6ff; }
+    .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .header h1 { font-size: 1.1rem; font-weight: 600; }
+    .badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; background: #238636; border-radius: 2em; color: #fff; font-weight: 600; }
+
+    .container { display: grid; grid-template-columns: 380px 1fr; gap: 0; height: calc(100vh - 57px); }
+    .sidebar { background: #161b22; border-right: 1px solid #30363d; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .output-pane { display: flex; flex-direction: column; }
+
+    h2 { font-size: 0.875rem; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    label { display: block; font-size: 0.875rem; margin-bottom: 0.375rem; color: #e6edf3; }
+    select, input[type=text] {
+      width: 100%; padding: 0.5rem 0.625rem; background: #0d1117; border: 1px solid #30363d;
+      border-radius: 6px; color: #e6edf3; font-size: 0.875rem; appearance: none;
+    }
+    select:focus, input:focus { outline: none; border-color: #58a6ff; }
+    .check-group { display: flex; flex-direction: column; gap: 0.375rem; }
+    .check-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer; }
+    .check-item input { width: 14px; height: 14px; cursor: pointer; accent-color: #238636; }
+    textarea { width: 100%; padding: 0.5rem; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #e6edf3; font-size: 0.8rem; resize: vertical; }
+
+    .output-toolbar { background: #161b22; border-bottom: 1px solid #30363d; padding: 0.625rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .output-toolbar span { font-size: 0.75rem; color: #8b949e; font-family: monospace; }
+    .btn-copy { background: #238636; color: #fff; border: none; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+    .btn-copy:hover { background: #2ea043; }
+    .btn-copy.copied { background: #1f6feb; }
+    #output { flex: 1; background: #0d1117; color: #e6edf3; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.8rem; line-height: 1.6; padding: 1rem 1.25rem; overflow-y: auto; white-space: pre; border: none; resize: none; }
+
+    .upsell { background: #0d419d22; border: 1px solid #1f6feb44; border-radius: 6px; padding: 0.875rem; font-size: 0.8rem; color: #8b949e; }
+    .upsell strong { color: #58a6ff; }
+    .upsell a { font-weight: 600; }
+
+    @media (max-width: 700px) {
+      .container { grid-template-columns: 1fr; height: auto; }
+      #output { height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <svg width="20" height="20" viewBox="0 0 16 16" fill="#e6edf3"><path d="M3.75 0A.75.75 0 013 .75v14.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-10a.75.75 0 00-.22-.53l-4-4A.75.75 0 008.5 0h-4.75zm0 1.5H8v3.25c0 .414.336.75.75.75h3.25v9H3.75V1.5zM9.5 1.5l2.5 2.5H9.5V1.5z"/></svg>
+  <h1>CLAUDE.md Generator</h1>
+  <span class="badge">FREE TOOL</span>
+</div>
+
+<div class="container">
+  <aside class="sidebar">
+    <div>
+      <h2>Project Type</h2>
+      <label for="stack">Tech stack</label>
+      <select id="stack" onchange="generate()">
+        <option value="nextjs">Next.js (App Router)</option>
+        <option value="fastapi">FastAPI + SQLAlchemy</option>
+        <option value="react">React + Vite</option>
+        <option value="node">Node.js / Express + TypeScript</option>
+        <option value="python">Python (generic)</option>
+        <option value="go">Go</option>
+        <option value="monorepo">Monorepo (pnpm workspaces)</option>
+        <option value="blank">Blank / Custom</option>
+      </select>
+    </div>
+
+    <div>
+      <h2>Project Details</h2>
+      <label for="proj-name">Project name</label>
+      <input type="text" id="proj-name" placeholder="my-app" value="my-app" oninput="generate()">
+      <label for="proj-desc" style="margin-top:0.75rem">One-line description</label>
+      <input type="text" id="proj-desc" placeholder="A production web application" value="A production web application" oninput="generate()">
+    </div>
+
+    <div>
+      <h2>Testing</h2>
+      <select id="test-runner" onchange="generate()">
+        <option value="none">No test framework</option>
+        <option value="pytest">pytest</option>
+        <option value="vitest">vitest</option>
+        <option value="jest">jest</option>
+        <option value="go-test">go test</option>
+      </select>
+    </div>
+
+    <div>
+      <h2>Code Style</h2>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" id="lint-ruff" onchange="generate()"> Ruff (Python)</label>
+        <label class="check-item"><input type="checkbox" id="lint-eslint" checked onchange="generate()"> ESLint + Prettier</label>
+        <label class="check-item"><input type="checkbox" id="precommit" onchange="generate()"> pre-commit hooks</label>
+        <label class="check-item"><input type="checkbox" id="typecheck" checked onchange="generate()"> Strict type checking</label>
+      </div>
+    </div>
+
+    <div>
+      <h2>Extra Sections</h2>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" id="sec-env" checked onchange="generate()"> Environment / secrets</label>
+        <label class="check-item"><input type="checkbox" id="sec-deploy" onchange="generate()"> Deploy instructions</label>
+        <label class="check-item"><input type="checkbox" id="sec-arch" checked onchange="generate()"> Architecture notes</label>
+        <label class="check-item"><input type="checkbox" id="sec-pr" checked onchange="generate()"> PR / commit guidelines</label>
+        <label class="check-item"><input type="checkbox" id="sec-conventions" checked onchange="generate()"> Code conventions</label>
+      </div>
+    </div>
+
+    <div>
+      <h2>Custom notes</h2>
+      <textarea id="custom-notes" rows="4" placeholder="Any extra instructions for Claude..." oninput="generate()"></textarea>
+    </div>
+
+    <div class="upsell">
+      <strong>Want 12 hand-crafted templates?</strong><br>
+      The <a href="https://castrocrest.gumroad.com/l/gdhkoa" target="_blank">CLAUDE.md Template Collection</a> includes production-tested templates for Next.js, FastAPI, Go, monorepos, and more — written to produce consistent, high-quality Claude Code results. <strong>$12</strong>.
+    </div>
+  </aside>
+
+  <main class="output-pane">
+    <div class="output-toolbar">
+      <span>CLAUDE.md · place in project root</span>
+      <button class="btn-copy" id="copy-btn" onclick="copyOutput()">Copy</button>
+    </div>
+    <textarea id="output" readonly spellcheck="false"></textarea>
+  </main>
+</div>
+
+<script>
+const STACKS = {
+  nextjs: {
+    commands: `npm run dev          # Start dev server (localhost:3000)
+npm run build        # Production build
+npm run lint         # ESLint
+npm run type-check   # tsc --noEmit`,
+    arch: `- App Router (Next.js 15) — all routes under \`app/\`
+- Server Components by default; \`"use client"\` only when needed
+- \`lib/\` — shared utilities, DB client, auth helpers
+- \`components/\` — UI components (server unless marked client)
+- \`app/api/\` — API route handlers`,
+    never: `- Never use \`pages/\` directory — we use App Router
+- Never use \`getServerSideProps\` or \`getStaticProps\`
+- Never import server-only code in client components`,
+  },
+  fastapi: {
+    commands: `uvicorn src.main:app --reload   # Start dev server
+pytest                          # Run tests
+ruff check . && ruff format .   # Lint + format
+alembic upgrade head            # Apply DB migrations`,
+    arch: `- \`src/main.py\` — FastAPI app, lifespan, middleware
+- \`src/api/routers/\` — route handlers grouped by resource
+- \`src/models/\` — SQLAlchemy ORM models
+- \`src/schemas/\` — Pydantic request/response schemas
+- \`src/core/\` — config, database, security`,
+    never: `- Never use synchronous DB calls — always \`async with session\`
+- Never return ORM objects directly — always use Pydantic schemas
+- Never commit to main without passing \`pytest\``,
+  },
+  react: {
+    commands: `npm run dev          # Start dev server (localhost:5173)
+npm run build        # Production build
+npm run test         # Vitest
+npm run lint         # ESLint`,
+    arch: `- Vite + React 19
+- \`src/components/\` — UI components
+- \`src/hooks/\` — custom hooks
+- \`src/lib/\` — utilities, API client
+- TanStack Query for server state`,
+    never: `- Never use class components
+- Never fetch in useEffect — use TanStack Query
+- Never mix Tailwind with CSS modules in the same component`,
+  },
+  node: {
+    commands: `npm run dev          # ts-node-dev watch
+npm run build        # tsc
+npm test             # jest / vitest
+npm run lint         # ESLint`,
+    arch: `- Express + TypeScript
+- \`src/routes/\` — route handlers
+- \`src/middleware/\` — auth, validation, logging
+- \`src/services/\` — business logic
+- \`src/models/\` — DB models`,
+    never: `- Never use \`any\` type — fix or use \`unknown\`
+- Never access \`req.body\` without validation middleware
+- Never log secrets or PII`,
+  },
+  python: {
+    commands: `python -m pytest        # Tests
+ruff check . && ruff format .  # Lint
+mypy .                 # Type check`,
+    arch: `- Standard Python project structure
+- \`src/\` — application code
+- \`tests/\` — pytest tests`,
+    never: `- Never use \`# type: ignore\` without an explanation comment
+- Never hardcode secrets — use \`.env\` + \`pydantic_settings\``,
+  },
+  go: {
+    commands: `go run ./cmd/server     # Start server
+go test ./...           # Tests
+golangci-lint run       # Lint`,
+    arch: `- \`cmd/\` — application entrypoints
+- \`internal/\` — private application code
+- \`pkg/\` — reusable library code`,
+    never: `- Never ignore errors — always handle or wrap with context
+- Never use \`interface{}\` when a typed interface works
+- Never use \`init()\` for side effects`,
+  },
+  monorepo: {
+    commands: `pnpm dev             # Start all apps
+pnpm build           # Build all
+pnpm test            # Test all
+pnpm --filter web dev  # Single app`,
+    arch: `- pnpm workspaces monorepo
+- \`apps/\` — deployable applications
+- \`packages/\` — shared libraries (UI, utils, config)`,
+    never: `- Never import from \`apps/\` in \`packages/\`
+- Never bypass \`tsconfig\` path aliases with relative imports across packages`,
+  },
+  blank: {
+    commands: `# Add your commands here`,
+    arch: `# Describe your architecture here`,
+    never: `# Add project-specific rules here`,
+  },
+};
+
+function get(id) {
+  const el = document.getElementById(id);
+  if (el.type === 'checkbox') return el.checked;
+  return el.value.trim();
+}
+
+function generate() {
+  const stack = get('stack');
+  const name = get('proj-name') || 'my-app';
+  const desc = get('proj-desc') || 'A production application';
+  const s = STACKS[stack];
+  const testRunner = get('test-runner');
+  const hasRuff = get('lint-ruff');
+  const hasEslint = get('lint-eslint');
+  const hasPrecommit = get('precommit');
+  const hasTypecheck = get('typecheck');
+  const hasEnv = get('sec-env');
+  const hasDeploy = get('sec-deploy');
+  const hasArch = get('sec-arch');
+  const hasPr = get('sec-pr');
+  const hasConventions = get('sec-conventions');
+  const customNotes = get('custom-notes');
+
+  let out = `# ${name}\n\n${desc}\n\n`;
+
+  out += `## Commands\n\n\`\`\`bash\n${s.commands}\n\`\`\`\n\n`;
+
+  if (hasArch) {
+    out += `## Architecture\n\n${s.arch}\n\n`;
+  }
+
+  if (hasConventions) {
+    out += `## Code Conventions\n\n`;
+    if (hasTypecheck) out += `- **TypeScript strict mode** — no \`any\`, no \`// @ts-ignore\` without comment\n`;
+    if (hasRuff) out += `- **Ruff** for linting and formatting — run \`ruff check --fix .\` before committing\n`;
+    if (hasEslint) out += `- **ESLint + Prettier** — run \`npm run lint\` before committing\n`;
+    if (hasPrecommit) out += `- **pre-commit hooks** enforce linting on every commit\n`;
+    if (testRunner !== 'none') out += `- **Tests required** — all new features need tests (${testRunner})\n`;
+    out += `- **No commented-out code** — delete it, git history preserves it\n`;
+    out += `- **Descriptive names** — no abbreviations except standard ones (req, res, id, url)\n\n`;
+  }
+
+  if (hasEnv) {
+    out += `## Environment\n\n`;
+    out += `Copy \`.env.example\` to \`.env\` for local development. Never commit \`.env\`.\n\n`;
+    out += `Required environment variables are documented in \`.env.example\`.\n\n`;
+  }
+
+  if (hasPr) {
+    out += `## Pull Requests\n\n`;
+    out += `- Branch from \`main\`, name branches \`feat/\`, \`fix/\`, \`chore/\`\n`;
+    out += `- Keep PRs small (< 400 lines changed)\n`;
+    out += `- Write a one-line summary of the WHY, not what changed\n`;
+    if (testRunner !== 'none') out += `- All tests must pass before merge\n`;
+    out += `\n`;
+  }
+
+  if (hasDeploy) {
+    out += `## Deploy\n\n`;
+    out += `# Add deploy instructions here\n\n`;
+  }
+
+  out += `## What Not To Do\n\n`;
+  out += s.never.split('\n').map(l => l.startsWith('#') ? l : l).join('\n');
+  out += '\n\n';
+
+  if (customNotes) {
+    out += `## Notes\n\n${customNotes}\n\n`;
+  }
+
+  out = out.replace(/\n{3,}/g, '\n\n').trimEnd() + '\n';
+  document.getElementById('output').value = out;
+}
+
+function copyOutput() {
+  const text = document.getElementById('output').value;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+generate();
+</script>
+</body>
+</html>
