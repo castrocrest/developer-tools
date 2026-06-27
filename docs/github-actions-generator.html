@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions Workflow Generator — Free Tool</title>
+  <meta name="description" content="Generate GitHub Actions YAML workflows for Node.js, Python, Docker, security scanning, and release automation. Free online generator.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+    a { color: #58a6ff; }
+    .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .header h1 { font-size: 1.1rem; font-weight: 600; }
+    .badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; background: #238636; border-radius: 2em; color: #fff; font-weight: 600; }
+    .container { display: grid; grid-template-columns: 360px 1fr; gap: 0; height: calc(100vh - 57px); }
+    .sidebar { background: #161b22; border-right: 1px solid #30363d; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .output-pane { display: flex; flex-direction: column; }
+    h2 { font-size: 0.875rem; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    label { display: block; font-size: 0.875rem; margin-bottom: 0.375rem; color: #e6edf3; }
+    select, input[type=text] { width: 100%; padding: 0.5rem 0.625rem; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #e6edf3; font-size: 0.875rem; }
+    select:focus, input:focus { outline: none; border-color: #58a6ff; }
+    .check-group { display: flex; flex-direction: column; gap: 0.375rem; }
+    .check-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer; }
+    .check-item input { width: 14px; height: 14px; cursor: pointer; accent-color: #238636; }
+    .output-toolbar { background: #161b22; border-bottom: 1px solid #30363d; padding: 0.625rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .output-toolbar span { font-size: 0.75rem; color: #8b949e; font-family: monospace; }
+    .btn-copy { background: #238636; color: #fff; border: none; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+    .btn-copy:hover { background: #2ea043; }
+    .btn-copy.copied { background: #1f6feb; }
+    #output { flex: 1; background: #0d1117; color: #e6edf3; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.8rem; line-height: 1.6; padding: 1rem 1.25rem; overflow-y: auto; white-space: pre; border: none; resize: none; }
+    .upsell { background: #0d419d22; border: 1px solid #1f6feb44; border-radius: 6px; padding: 0.875rem; font-size: 0.8rem; color: #8b949e; }
+    .upsell strong { color: #58a6ff; }
+    .upsell a { font-weight: 600; }
+    .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .tag { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 100px; background: #1f2937; color: #8b949e; border: 1px solid #30363d; cursor: pointer; user-select: none; }
+    .tag.active { background: #1f6feb33; border-color: #58a6ff; color: #58a6ff; }
+    @media (max-width: 700px) { .container { grid-template-columns: 1fr; height: auto; } #output { height: 60vh; } }
+  </style>
+</head>
+<body>
+<div class="header">
+  <svg width="20" height="20" viewBox="0 0 16 16" fill="#e6edf3"><path d="M11.134 1.535C9.722 2.562 8.16 4.057 6.816 5.848 5.14 8.065 4 10.531 4 13c0 1.52.88 2.508 2.283 2.873C7.145 16.17 8.623 16 10 16c1.376 0 2.855-.169 3.717-.127C15.12 15.508 16 14.52 16 13c0-2.469-1.14-4.935-2.816-7.152C11.84 4.057 10.278 2.562 8.866 1.535L8 1 7.134 1.535zm.732 1.028C13.203 3.545 14.5 5.25 14.5 7c0 1.75-1.297 3.455-2.634 4.437C10.528 12.42 9.265 12.5 8 12.5c-1.265 0-2.528-.08-3.866-1.063C2.797 10.455 1.5 8.75 1.5 7c0-1.75 1.297-3.455 2.634-4.437C5.472 1.58 6.735 1.5 8 1.5c1.265 0 2.528.08 3.866 1.063z"/></svg>
+  <h1>GitHub Actions Workflow Generator</h1>
+  <span class="badge">FREE TOOL</span>
+</div>
+
+<div class="container">
+  <aside class="sidebar">
+    <div>
+      <h2>Workflow Type</h2>
+      <select id="workflow-type" onchange="generate()">
+        <option value="node-ci">Node.js / TypeScript CI</option>
+        <option value="python-ci">Python CI</option>
+        <option value="docker-publish">Docker Build + Push</option>
+        <option value="release">Release + Changelog</option>
+        <option value="security">Security Scan</option>
+        <option value="pr-checks">PR Quality Checks</option>
+        <option value="deploy-pages">Deploy to GitHub Pages</option>
+      </select>
+    </div>
+
+    <div>
+      <h2>Triggers</h2>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" id="trigger-push" checked onchange="generate()"> Push to main/master</label>
+        <label class="check-item"><input type="checkbox" id="trigger-pr" checked onchange="generate()"> Pull requests</label>
+        <label class="check-item"><input type="checkbox" id="trigger-schedule" onchange="generate()"> Schedule (cron)</label>
+        <label class="check-item"><input type="checkbox" id="trigger-manual" onchange="generate()"> Manual trigger (workflow_dispatch)</label>
+        <label class="check-item"><input type="checkbox" id="trigger-tags" onchange="generate()"> Git tags (v*)</label>
+      </div>
+    </div>
+
+    <div>
+      <h2>Node versions <small style="color:#8b949e">(multi-matrix)</small></h2>
+      <div class="tags" id="node-versions-tags">
+        <span class="tag" onclick="toggleTag(this)">18</span>
+        <span class="tag active" onclick="toggleTag(this)">20</span>
+        <span class="tag active" onclick="toggleTag(this)">22</span>
+      </div>
+    </div>
+
+    <div>
+      <h2>Python versions</h2>
+      <div class="tags" id="python-versions-tags">
+        <span class="tag" onclick="toggleTag(this)">3.11</span>
+        <span class="tag active" onclick="toggleTag(this)">3.12</span>
+        <span class="tag" onclick="toggleTag(this)">3.13</span>
+      </div>
+    </div>
+
+    <div>
+      <h2>Package manager</h2>
+      <select id="pkg-manager" onchange="generate()">
+        <option value="npm">npm</option>
+        <option value="pnpm">pnpm</option>
+        <option value="yarn">yarn</option>
+        <option value="bun">bun</option>
+      </select>
+    </div>
+
+    <div>
+      <h2>Steps to include</h2>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" id="step-lint" checked onchange="generate()"> Lint</label>
+        <label class="check-item"><input type="checkbox" id="step-typecheck" checked onchange="generate()"> Type check</label>
+        <label class="check-item"><input type="checkbox" id="step-test" checked onchange="generate()"> Tests</label>
+        <label class="check-item"><input type="checkbox" id="step-build" checked onchange="generate()"> Build</label>
+        <label class="check-item"><input type="checkbox" id="step-cache" checked onchange="generate()"> Dependency cache</label>
+        <label class="check-item"><input type="checkbox" id="step-coverage" onchange="generate()"> Coverage upload</label>
+      </div>
+    </div>
+
+    <div class="upsell">
+      <strong>Need complete CI/CD workflows?</strong><br>
+      The <a href="https://castrocrest.gumroad.com/l/fbfgwt" target="_blank">GitHub Actions Pack</a> includes 8 production-tested workflows: Python CI, TypeScript CI, Docker multi-platform, security scans, Dependabot, and release automation. <strong>$12</strong>.
+    </div>
+  </aside>
+
+  <main class="output-pane">
+    <div class="output-toolbar">
+      <span id="file-path">.github/workflows/ci.yml</span>
+      <button class="btn-copy" id="copy-btn" onclick="copyOutput()">Copy</button>
+    </div>
+    <textarea id="output" readonly spellcheck="false"></textarea>
+  </main>
+</div>
+
+<script>
+function g(id) {
+  const el = document.getElementById(id);
+  return el.type === 'checkbox' ? el.checked : el.value;
+}
+
+function toggleTag(el) {
+  el.classList.toggle('active');
+  generate();
+}
+
+function getActiveTags(containerId) {
+  return [...document.getElementById(containerId).querySelectorAll('.tag.active')].map(t => t.textContent.trim());
+}
+
+function installCmd(pm, args='install') {
+  if (pm === 'pnpm') return args === 'install' ? 'pnpm install --frozen-lockfile' : `pnpm ${args}`;
+  if (pm === 'yarn') return args === 'install' ? 'yarn install --frozen-lockfile' : `yarn ${args}`;
+  if (pm === 'bun') return args === 'install' ? 'bun install --frozen-lockfile' : `bun ${args}`;
+  return args === 'install' ? 'npm ci' : `npm run ${args}`;
+}
+
+function setupPm(pm) {
+  if (pm === 'pnpm') return '\n      - name: Setup pnpm\n        uses: pnpm/action-setup@v4\n        with:\n          version: latest';
+  if (pm === 'bun') return '\n      - name: Setup Bun\n        uses: oven-sh/setup-bun@v2';
+  return '';
+}
+
+function cacheConfig(pm) {
+  const map = { npm: 'npm', pnpm: 'pnpm', yarn: 'yarn', bun: 'bun' };
+  return `cache: '${map[pm]}'`;
+}
+
+function lockFile(pm) {
+  return { npm: 'package-lock.json', pnpm: 'pnpm-lock.yaml', yarn: 'yarn.lock', bun: 'bun.lockb' }[pm] || 'package-lock.json';
+}
+
+function generate() {
+  const type = g('workflow-type');
+  const pm = g('pkg-manager');
+  const push = g('trigger-push');
+  const pr = g('trigger-pr');
+  const sched = g('trigger-schedule');
+  const manual = g('trigger-manual');
+  const tags = g('trigger-tags');
+  const nodeVersions = getActiveTags('node-versions-tags');
+  const pyVersions = getActiveTags('python-versions-tags');
+  const lint = g('step-lint');
+  const typecheck = g('step-typecheck');
+  const test = g('step-test');
+  const build = g('step-build');
+  const cache = g('step-cache');
+  const coverage = g('step-coverage');
+
+  let on = '';
+  if (push) on += '\n  push:\n    branches: [main, master]';
+  if (tags) on += '\n  push:\n    tags: ["v*"]';
+  if (pr) on += '\n  pull_request:\n    branches: [main, master]';
+  if (sched) on += '\n  schedule:\n    - cron: "0 6 * * 1"  # Monday 6 AM';
+  if (manual) on += '\n  workflow_dispatch:';
+  if (!on) on = '\n  push:\n    branches: [main]';
+
+  let yml = '';
+  const filePath = document.getElementById('file-path');
+
+  if (type === 'node-ci') {
+    filePath.textContent = '.github/workflows/ci.yml';
+    const matrix = nodeVersions.length > 1
+      ? `    strategy:\n      matrix:\n        node-version: [${nodeVersions.join(', ')}]\n`
+      : '';
+    const nodeUse = nodeVersions.length > 1 ? 'node-version: ${{ matrix.node-version }}' : `node-version: '${nodeVersions[0] || '22'}'`;
+    yml = `name: CI\n\non:${on}\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n${matrix}    steps:\n      - uses: actions/checkout@v4\n${setupPm(pm)}\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          ${nodeUse}${cache ? `\n          ${cacheConfig(pm)}` : ''}\n\n      - name: Install dependencies\n        run: ${installCmd(pm)}`;
+    if (lint) yml += `\n\n      - name: Lint\n        run: ${installCmd(pm, 'lint')}`;
+    if (typecheck) yml += `\n\n      - name: Type check\n        run: ${installCmd(pm, 'type-check')}`;
+    if (test) yml += `\n\n      - name: Test\n        run: ${installCmd(pm, 'test')}${coverage ? ' -- --coverage' : ''}`;
+    if (build) yml += `\n\n      - name: Build\n        run: ${installCmd(pm, 'build')}`;
+    if (coverage) yml += `\n\n      - name: Upload coverage\n        uses: codecov/codecov-action@v4\n        with:\n          token: \${{ secrets.CODECOV_TOKEN }}`;
+  }
+
+  else if (type === 'python-ci') {
+    filePath.textContent = '.github/workflows/ci.yml';
+    const matrix = pyVersions.length > 1
+      ? `    strategy:\n      matrix:\n        python-version: ["${pyVersions.join('", "')}"]\n`
+      : '';
+    const pyUse = pyVersions.length > 1 ? 'python-version: ${{ matrix.python-version }}' : `python-version: "${pyVersions[0] || '3.12'}"`;
+    yml = `name: CI\n\non:${on}\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n${matrix}    steps:\n      - uses: actions/checkout@v4\n\n      - name: Setup Python\n        uses: actions/setup-python@v5\n        with:\n          ${pyUse}${cache ? "\n          cache: 'pip'" : ''}\n\n      - name: Install dependencies\n        run: pip install -e ".[dev]"`;
+    if (lint) yml += `\n\n      - name: Lint\n        run: ruff check . && ruff format --check .`;
+    if (typecheck) yml += `\n\n      - name: Type check\n        run: mypy .`;
+    if (test) yml += `\n\n      - name: Test\n        run: pytest${coverage ? ' --cov --cov-report=xml' : ''}`;
+    if (coverage) yml += `\n\n      - name: Upload coverage\n        uses: codecov/codecov-action@v4`;
+  }
+
+  else if (type === 'docker-publish') {
+    filePath.textContent = '.github/workflows/docker.yml';
+    yml = `name: Docker Build and Push\n\non:${on}\n\njobs:\n  docker:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      packages: write\n\n    steps:\n      - uses: actions/checkout@v4\n\n      - name: Set up QEMU\n        uses: docker/setup-qemu-action@v3\n\n      - name: Set up Docker Buildx\n        uses: docker/setup-buildx-action@v3\n\n      - name: Login to GitHub Container Registry\n        uses: docker/login-action@v3\n        with:\n          registry: ghcr.io\n          username: \${{ github.actor }}\n          password: \${{ secrets.GITHUB_TOKEN }}\n\n      - name: Extract metadata\n        id: meta\n        uses: docker/metadata-action@v5\n        with:\n          images: ghcr.io/\${{ github.repository }}\n          tags: |\n            type=ref,event=branch\n            type=semver,pattern=v{{version}}\n            type=semver,pattern=v{{major}}.{{minor}}\n            type=sha,prefix=,suffix=,format=short\n\n      - name: Build and push\n        uses: docker/build-push-action@v5\n        with:\n          context: .\n          platforms: linux/amd64,linux/arm64\n          push: \${{ github.event_name != 'pull_request' }}\n          tags: \${{ steps.meta.outputs.tags }}\n          labels: \${{ steps.meta.outputs.labels }}\n          cache-from: type=gha\n          cache-to: type=gha,mode=max`;
+  }
+
+  else if (type === 'release') {
+    filePath.textContent = '.github/workflows/release.yml';
+    yml = `name: Release\n\non:\n  push:\n    tags: ["v*"]\n\njobs:\n  release:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: write\n\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0   # full history for changelog\n${setupPm(pm)}\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: '22'\n          ${cacheConfig(pm)}\n\n      - name: Install dependencies\n        run: ${installCmd(pm)}\n\n      - name: Build\n        run: ${installCmd(pm, 'build')}\n\n      - name: Generate changelog\n        uses: castrocrest/generate-changelog-action@v1\n        with:\n          token: \${{ secrets.GITHUB_TOKEN }}\n          release-tag: \${{ github.ref_name }}\n\n      - name: Upload release assets\n        uses: softprops/action-gh-release@v2\n        with:\n          files: dist/*\n          generate_release_notes: true`;
+  }
+
+  else if (type === 'security') {
+    filePath.textContent = '.github/workflows/security.yml';
+    yml = `name: Security Scan\n\non:\n  schedule:\n    - cron: "0 6 * * 1"  # Every Monday 6 AM\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n\njobs:\n  codeql:\n    runs-on: ubuntu-latest\n    permissions:\n      actions: read\n      contents: read\n      security-events: write\n\n    steps:\n      - uses: actions/checkout@v4\n\n      - name: Initialize CodeQL\n        uses: github/codeql-action/init@v3\n        with:\n          languages: javascript-typescript  # or python, java, etc.\n\n      - name: Autobuild\n        uses: github/codeql-action/autobuild@v3\n\n      - name: Analyze\n        uses: github/codeql-action/analyze@v3\n\n  dependency-review:\n    runs-on: ubuntu-latest\n    if: github.event_name == 'pull_request'\n    steps:\n      - uses: actions/checkout@v4\n      - name: Dependency review\n        uses: actions/dependency-review-action@v4\n        with:\n          fail-on-severity: high`;
+  }
+
+  else if (type === 'pr-checks') {
+    filePath.textContent = '.github/workflows/pr-checks.yml';
+    yml = `name: PR Checks\n\non:\n  pull_request:\n    branches: [main, master]\n\njobs:\n  pr-title:\n    name: Validate PR title (conventional commits)\n    runs-on: ubuntu-latest\n    steps:\n      - uses: amannn/action-semantic-pull-request@v5\n        env:\n          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}\n\n  size-check:\n    name: PR size check\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - name: Check PR size\n        run: |\n          LINES_CHANGED=\$(git diff --stat origin/\${{ github.base_ref }} | tail -1 | grep -oE '[0-9]+ insertion' | grep -oE '[0-9]+')\n          if [ "\${LINES_CHANGED:-0}" -gt 500 ]; then\n            echo "::warning::Large PR: \${LINES_CHANGED} lines changed. Consider splitting."\n          fi\n\n  required-checks:\n    name: Lint and Test\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n${setupPm(pm)}\n      - uses: actions/setup-node@v4\n        with:\n          node-version: '22'\n          ${cacheConfig(pm)}\n      - run: ${installCmd(pm)}\n      - run: ${installCmd(pm, 'lint')}\n      - run: ${installCmd(pm, 'test')}`;
+  }
+
+  else if (type === 'deploy-pages') {
+    filePath.textContent = '.github/workflows/deploy-pages.yml';
+    yml = `name: Deploy to GitHub Pages\n\non:\n  push:\n    branches: [main]\n  workflow_dispatch:\n\npermissions:\n  contents: read\n  pages: write\n  id-token: write\n\nconcurrency:\n  group: pages\n  cancel-in-progress: false\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n${setupPm(pm)}\n      - uses: actions/setup-node@v4\n        with:\n          node-version: '22'\n          ${cacheConfig(pm)}\n\n      - name: Install\n        run: ${installCmd(pm)}\n\n      - name: Build\n        run: ${installCmd(pm, 'build')}\n\n      - name: Upload artifact\n        uses: actions/upload-pages-artifact@v3\n        with:\n          path: ./dist  # or ./out, ./.next/out, etc.\n\n  deploy:\n    environment:\n      name: github-pages\n      url: \${{ steps.deployment.outputs.page_url }}\n    runs-on: ubuntu-latest\n    needs: build\n    steps:\n      - name: Deploy to GitHub Pages\n        id: deployment\n        uses: actions/deploy-pages@v4`;
+  }
+
+  document.getElementById('output').value = yml;
+}
+
+function copyOutput() {
+  navigator.clipboard.writeText(document.getElementById('output').value).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+generate();
+</script>
+</body>
+</html>
